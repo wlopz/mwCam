@@ -10,7 +10,11 @@ import UIKit
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    @IBOutlet var myImg: UIImageView!
+    
+    @IBOutlet var imgVw: UIImageView!
+    @IBOutlet var subjectField: UITextField!
+    @IBOutlet var bodyField: UITextField!
+    
     
     
     override func viewDidLoad() {
@@ -21,7 +25,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         super.didReceiveMemoryWarning()
     }
     
-    @IBAction func takePhoto(_ sender: AnyObject) {
+    @IBAction func takePic(_ sender: AnyObject) {
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
@@ -34,13 +38,28 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            myImg.contentMode = .scaleToFill
-            myImg.image = pickedImage
+            imgVw.contentMode = .scaleToFill
+            imgVw.image = pickedImage
         }
         picker.dismiss(animated: true, completion: nil)
     }
     
-    
-    
+}
+
+extension ViewController: UITextFieldDelegate {
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+
+        switch textField {
+        case subjectField:
+            bodyField.becomeFirstResponder()
+        default:
+            bodyField.resignFirstResponder()
+        }
+
+        return true
+
+    }
+
 }
 
