@@ -44,6 +44,35 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         picker.dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func sendBtn(_ sender: Any) {
+        let defaults = `UserDefaults`.standard
+        
+        defaults.set(subjectField.text, forKey: "subjectField")
+        defaults.set(bodyField.text, forKey: "bodyField")
+        defaults.synchronize()
+        
+        print("sf=\(subjectField.text), bf=\(bodyField.text)")
+    }
+    
+    @IBAction func clearBtn(_ sender: Any) {
+//        if(subjectField.text == ""){
+//            loadDefaults()
+//            clearBtn.setTitle("Clear", forState: .Normal)
+//        }
+//        else {
+//            subjectField.text = ""
+//            bodyField.text = ""
+//            clearBtn.setTitle("Load", forState: .Normal)
+//        }
+    }
+    
+    func loadDefaults() {
+        let defaults = `UserDefaults`.standard
+        subjectField.text = defaults.object(forKey: "subjectField") as? String
+        bodyField.text = defaults.object(forKey: "bodyField") as? String
+    }
+    
+    
 }
 
 extension ViewController: UITextFieldDelegate {
